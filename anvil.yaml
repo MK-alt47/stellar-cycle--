@@ -1,6 +1,7 @@
 allow_embedding: false
-name: Minimal Theme 1
-package_name: Minimal_Theme_1
+metadata: {title: Stellar Cycle}
+name: 'Stellar Cycle  '
+package_name: Stellar_Cycle__
 runtime_options:
   client_version: '3'
   server_spec: {base: python310-minimal}
