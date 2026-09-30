@@ -1,10 +1,12 @@
 unique_ids:
   assets:
+    Stellar Cycle app logo.png: '1790778572766130533330679.1724'
     theme.css: KD7P7RRBIYRIVP6DD56IGHDVYHBPBRWV
   forms:
     Form1: GB5DRIU2DJLMKDKX4LG6LOIUZRC55CNJ
     Layouts.BaseLayout: 4NUR2QUMEJTDGDMK5Q2QJYPQ44C5X5OQ
   modules:
     Layouts: 7ZSN5XG6AZ767IXM3SX2YCR4LICJFRM4
-  scripts: {}
+  scripts:
+    Script: '1790778061951273990749889.90314'
   server_modules: {}
