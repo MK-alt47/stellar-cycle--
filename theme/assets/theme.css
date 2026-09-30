@@ -30,6 +30,16 @@ body {
   min-height: calc(100vh - var(--anvil-banner-height, 0px));
 }
 
+.corner-logo {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 10;
+  width: clamp(72px, 9vw, 120px);
+  height: auto;
+  pointer-events: none;
+}
+
 .page-header {
   display: flex;
   align-items: center;
@@ -260,6 +270,12 @@ textarea.anvil-text-area:disabled,
 }
 
 @media (max-width: 760px) {
+  .corner-logo {
+    right: 16px;
+    bottom: 16px;
+    width: 76px;
+  }
+
   .page-header {
     display: block;
   }
