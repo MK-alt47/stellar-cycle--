@@ -10,3 +10,8 @@ class Form1(Form1Template):
   def form_show(self, **event_args):
     """This method is called when the form is shown on the page"""
     pass  # Write Code Here
+
+  @handle("image_1", "show")
+  def image_1_show(self, **event_args):
+    """This method is called when the Image is shown on the screen"""
+    pass  # Write Code Here

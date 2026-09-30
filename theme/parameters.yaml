@@ -1,15 +1,15 @@
 color_scheme:
   colors:
-  - {color: '#176b87', name: Primary}
-  - {color: '#f7f8fa', name: Background}
-  - {color: '#ffffff', name: Surface}
-  - {color: '#1d2430', name: Text}
-  - {color: '#667085', name: Muted}
-  - {color: '#d8dee8', name: Border}
-  - {color: '#0e4254', name: Primary Dark}
-  - {color: 'rgba(23, 107, 135, 0.18)', name: Focus Ring}
-  - {color: '#ffffff', name: Control Background}
-  - {color: '#f9fbfc', name: Control Background Hover}
+  - {color: '#0046C9', name: Primary}
+  - {color: '#363636', name: Background}
+  - {color: '#363636', name: Surface}
+  - {color: '#C7C7C7', name: Text}
+  - {color: '#0064B5', name: Muted}
+  - {color: '#000000', name: Border}
+  - {color: '#0036A1', name: Primary Dark}
+  - {color: 'rgba(9, 3, 189, 0.74)', name: Focus Ring}
+  - {color: '#363636', name: Control Background}
+  - {color: '#C7C7C7', name: Control Background Hover}
   - {color: '#eef2f6', name: Control Disabled}
   - {color: '#eef5f7', name: Surface Muted}
 roles:
