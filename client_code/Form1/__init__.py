@@ -14,3 +14,8 @@ class Form1(Form1Template):
   def form_show(self, **event_args):
     """This method is called when the form is shown on the page"""
     pass  # Write Code Here
+
+  @handle("button_1", "click")
+  def button_1_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass  # Write Code Here
