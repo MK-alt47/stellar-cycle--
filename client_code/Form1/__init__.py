@@ -18,4 +18,4 @@ class Form1(Form1Template):
   @handle("button_1", "click")
   def button_1_click(self, **event_args):
     """This method is called when the button is clicked"""
-    pass  open_form("Page Two") 
+  open_form("Page Two") 
