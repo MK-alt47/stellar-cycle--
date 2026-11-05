@@ -1,5 +1,27 @@
 allow_embedding: false
 db_schema:
+  survey_responses:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: sleep_hours
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      client_hidden: false
+      name: weight_Kg
+      type: number
+    - admin_ui: {order: 2, width: 200}
+      client_hidden: false
+      name: caffeine_mg_per_day
+      type: number
+    - admin_ui: {order: 3, width: 200}
+      client_hidden: false
+      name: height_feet
+      type: number
+    indexes: []
+    server: full
+    title: survey_responses
   users:
     client: none
     columns:
