@@ -27,16 +27,9 @@ class Form2(Form2Template):
 
   @handle("submit_button", "click")
   def submit_button_click(self, **event_args):
-    fields = (
-      self.sleep_hours_box,
-      self.weight_kg_box,
-      self.caffeine_box,
-      self.height_feet_box,
-      self.meals_per_day_box,
-      self.sleep_quality_box,
-    )
-    if any(not str(field.text or "").strip() for field in fields):
-      self.account_status_label.text = "Please complete every survey field."
+    validation_message = self._validate_survey_values()
+    if validation_message:
+      self.account_status_label.text = validation_message
       return
 
     if anvil.users.get_user() is None:
@@ -62,3 +55,28 @@ class Form2(Form2Template):
       return
 
     self.account_status_label.text = "Your survey response has been saved."
+
+  def _validate_survey_values(self):
+    limits = (
+      ("Hours of sleep", self.sleep_hours_box.text, 0, 24, False),
+      ("Weight in kilograms", self.weight_kg_box.text, 1, 500, False),
+      ("Caffeine in milligrams per day", self.caffeine_box.text, 0, 2000, False),
+      ("Height in feet", self.height_feet_box.text, 1, 8, False),
+      ("Meals per day", self.meals_per_day_box.text, 0, 20, True),
+      ("Sleep quality", self.sleep_quality_box.text, 1, 10, True),
+    )
+
+    if any(value is None or not str(value).strip() for _, value, _, _, _ in limits):
+      return "Enter a number in every field, within its displayed range."
+
+    for label, value, minimum, maximum, whole_number in limits:
+      try:
+        number = float(value)
+      except (TypeError, ValueError):
+        return "{} must be a number.".format(label)
+      if not minimum <= number <= maximum:
+        return "{} must be between {} and {}.".format(label, minimum, maximum)
+      if whole_number and number % 1 != 0:
+        return "{} must be a whole number.".format(label)
+
+    return None

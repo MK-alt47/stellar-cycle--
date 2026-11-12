@@ -7,18 +7,18 @@
       <anvil-component type="Label" name="intro_label" prop:text="Sign in or create an account, then complete every field and save your response."></anvil-component>
       <anvil-component type="Button" name="account_button" prop:text="Log in or sign up"></anvil-component>
       <anvil-component type="Label" name="account_status_label" prop:text="Sign in or create an account before saving your survey."></anvil-component>
-      <anvil-component type="Label" name="sleep_hours_label" prop:text="Average hours of sleep per night"></anvil-component>
-      <anvil-component type="TextBox" name="sleep_hours_box" prop:placeholder="For example: 8"></anvil-component>
-      <anvil-component type="Label" name="weight_kg_label" prop:text="Weight (kilograms)"></anvil-component>
-      <anvil-component type="TextBox" name="weight_kg_box" prop:placeholder="For example: 70"></anvil-component>
-      <anvil-component type="Label" name="caffeine_label" prop:text="Average caffeine consumed per day (milligrams)"></anvil-component>
-      <anvil-component type="TextBox" name="caffeine_box" prop:placeholder="For example: 200"></anvil-component>
-      <anvil-component type="Label" name="height_feet_label" prop:text="Height (decimal feet; for example, 5 ft 8 in is 5.67)"></anvil-component>
-      <anvil-component type="TextBox" name="height_feet_box" prop:placeholder="For example: 5.67"></anvil-component>
-      <anvil-component type="Label" name="meals_per_day_label" prop:text="Meals consumed per day (whole number)"></anvil-component>
-      <anvil-component type="TextBox" name="meals_per_day_box" prop:placeholder="For example: 3"></anvil-component>
+      <anvil-component type="Label" name="sleep_hours_label" prop:text="Average hours of sleep per night (0–24)"></anvil-component>
+      <anvil-component type="TextBox" name="sleep_hours_box" prop:type="number" prop:placeholder="For example: 8"></anvil-component>
+      <anvil-component type="Label" name="weight_kg_label" prop:text="Weight in kilograms (1–500)"></anvil-component>
+      <anvil-component type="TextBox" name="weight_kg_box" prop:type="number" prop:placeholder="For example: 70"></anvil-component>
+      <anvil-component type="Label" name="caffeine_label" prop:text="Average caffeine per day in milligrams (0–2,000)"></anvil-component>
+      <anvil-component type="TextBox" name="caffeine_box" prop:type="number" prop:placeholder="For example: 200"></anvil-component>
+      <anvil-component type="Label" name="height_feet_label" prop:text="Height in decimal feet (1–8; 5 ft 8 in is 5.67)"></anvil-component>
+      <anvil-component type="TextBox" name="height_feet_box" prop:type="number" prop:placeholder="For example: 5.67"></anvil-component>
+      <anvil-component type="Label" name="meals_per_day_label" prop:text="Meals consumed per day (whole number, 0–20)"></anvil-component>
+      <anvil-component type="TextBox" name="meals_per_day_box" prop:type="number" prop:placeholder="For example: 3"></anvil-component>
       <anvil-component type="Label" name="sleep_quality_label" prop:text="Sleep quality (1 = very poor, 10 = excellent)"></anvil-component>
-      <anvil-component type="TextBox" name="sleep_quality_box" prop:placeholder="Enter a whole number from 1 to 10"></anvil-component>
+      <anvil-component type="TextBox" name="sleep_quality_box" prop:type="number" prop:placeholder="Enter a whole number from 1 to 10"></anvil-component>
       <anvil-component type="Button" name="submit_button" prop:text="Save survey response"></anvil-component>
     </anvil-component>
   </anvil-block>
