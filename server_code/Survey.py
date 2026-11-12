@@ -5,12 +5,20 @@ import anvil.server
 import anvil.users
 from anvil.tables import app_tables
 
-SLEEP_MIN, SLEEP_MAX = 0, 24
+
 WEIGHT_MIN_KG, WEIGHT_MAX_KG = 1, 500
-CAFFEINE_MIN_MG, CAFFEINE_MAX_MG = 0, 2000
-HEIGHT_MIN_FEET, HEIGHT_MAX_FEET = 1, 8
-MEALS_MIN, MEALS_MAX = 0, 20
+TIMEZONE_MIN, TIMEZONE_MAX = -11, 12
+BEDTIME_MIN, BEDTIME_MAX = 0, 23
 SLEEP_QUALITY_MIN, SLEEP_QUALITY_MAX = 1, 10
+CAFFEINE_SERVINGS_MIN, CAFFEINE_SERVINGS_MAX = 0, 50
+MEALS_MIN, MEALS_MAX = 0, 20
+TRAVEL_OPTIONS = {
+    "1 - Never travel",
+    "2 - Travel once every few years",
+    "3 - Travel once or twice a year",
+    "4 - Travel almost every month",
+    "5 - Travel every day",
+}
 
 
 def _parse_number(value):
@@ -23,39 +31,81 @@ def _parse_number(value):
     return number
 
 
-@anvil.server.callable(require_user=True)
-def save_survey(sleep_hours, weight_kg, caffeine_mg_per_day, height_feet,
-                meals_per_day, sleep_quality):
-    sleep = _parse_number(sleep_hours)
-    weight = _parse_number(weight_kg)
-    caffeine = _parse_number(caffeine_mg_per_day)
-    height = _parse_number(height_feet)
-    meals = _parse_number(meals_per_day)
-    quality = _parse_number(sleep_quality)
+def _parse_integer(value):
+    number = _parse_number(value)
+    if number is None or not number.is_integer():
+        return None
+    return int(number)
 
-    if sleep is None or not SLEEP_MIN <= sleep <= SLEEP_MAX:
-        return {"ok": False, "message": "Hours of sleep must be between 0 and 24."}
-    if weight is None or not WEIGHT_MIN_KG <= weight <= WEIGHT_MAX_KG:
-        return {"ok": False, "message": "Weight must be between 1 and 500 kg."}
-    if caffeine is None or not CAFFEINE_MIN_MG <= caffeine <= CAFFEINE_MAX_MG:
-        return {"ok": False, "message": "Caffeine must be between 0 and 2,000 mg per day."}
-    if height is None or not HEIGHT_MIN_FEET <= height <= HEIGHT_MAX_FEET:
-        return {"ok": False, "message": "Height must be between 1 and 8 feet."}
-    if meals is None or not MEALS_MIN <= meals <= MEALS_MAX or not meals.is_integer():
-        return {"ok": False, "message": "Meals per day must be a whole number from 0 to 20."}
-    if (quality is None or not quality.is_integer()
-            or not SLEEP_QUALITY_MIN <= quality <= SLEEP_QUALITY_MAX):
+
+def _parse_height_feet(value):
+    text = str(value).strip()
+    parts = text.split(".")
+    if len(parts) not in (1, 2) or not parts[0].isdigit():
+        return None
+    feet = int(parts[0])
+    inches_text = parts[1] if len(parts) == 2 else "0"
+    if not inches_text.isdigit() or len(inches_text) > 2:
+        return None
+    inches = int(inches_text)
+    if not 1 <= feet <= 8 or not 0 <= inches <= 11:
+        return None
+    return round(feet + inches / 12.0, 4)
+
+
+@anvil.server.callable(require_user=True)
+def save_survey(height_input, weight_value, weight_unit, timezone_offset,
+                bedtime_hour, sleep_quality, travel_frequency,
+                caffeine_servings_per_day, meals_per_day):
+    height_feet = _parse_height_feet(height_input)
+    if height_feet is None:
+        return {"ok": False, "message": "Enter height as feet.inches, from 1.0 to 8.11."}
+
+    weight = _parse_number(weight_value)
+    unit = str(weight_unit).lower()
+    if weight is None or unit not in ("kg", "lb"):
+        return {"ok": False, "message": "Choose kg or lb and enter a valid weight."}
+    weight_kg = weight if unit == "kg" else weight * 0.453592
+    if not WEIGHT_MIN_KG <= weight_kg <= WEIGHT_MAX_KG:
+        return {"ok": False, "message": "Weight must be between 1 and 500 kg, or the equivalent in pounds."}
+
+    timezone = _parse_integer(timezone_offset)
+    if timezone is None or not TIMEZONE_MIN <= timezone <= TIMEZONE_MAX:
+        return {"ok": False, "message": "Time zone must be a whole-hour offset from -11 to +12."}
+
+    bedtime = _parse_integer(bedtime_hour)
+    if bedtime is None or not BEDTIME_MIN <= bedtime <= BEDTIME_MAX:
+        return {"ok": False, "message": "Bedtime must be a whole number from 0 to 23."}
+
+    quality = _parse_integer(sleep_quality)
+    if quality is None or not SLEEP_QUALITY_MIN <= quality <= SLEEP_QUALITY_MAX:
         return {"ok": False, "message": "Sleep quality must be a whole number from 1 to 10."}
+
+    travel = str(travel_frequency)
+    if travel not in TRAVEL_OPTIONS:
+        return {"ok": False, "message": "Choose one of the listed travel options."}
+
+    caffeine_servings = _parse_integer(caffeine_servings_per_day)
+    if (caffeine_servings is None
+            or not CAFFEINE_SERVINGS_MIN <= caffeine_servings <= CAFFEINE_SERVINGS_MAX):
+        return {"ok": False, "message": "Caffeine servings must be a whole number from 0 to 50 per day."}
+
+    meals = _parse_integer(meals_per_day)
+    if meals is None or not MEALS_MIN <= meals <= MEALS_MAX:
+        return {"ok": False, "message": "Meals must be a whole number from 0 to 20 per day."}
 
     user = anvil.users.get_user()
     app_tables.survey_responses.add_row(
         user=user,
-        sleep_hours=sleep,
-        weight_Kg=weight,
-        caffeine_mg_per_day=caffeine,
-        height_feet=height,
-        meals_per_day=int(meals),
-        sleep_quality=int(quality),
+        height_feet=height_feet,
+        weight_Kg=round(weight_kg, 2),
+        weight_input_unit=unit,
+        timezone_offset=timezone,
+        bedtime_hour=bedtime,
+        sleep_quality=quality,
+        travel_frequency=travel,
+        caffeine_servings_per_day=caffeine_servings,
+        meals_per_day=meals,
         submitted_at=datetime.now(),
     )
     return {"ok": True}
