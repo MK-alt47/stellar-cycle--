@@ -99,8 +99,8 @@ for q in survey_questions:
             question = input("Your answer: ").strip()
             if question == "y" or question == "Y":
                 try:
-                    weight = input("Enter your weight (In lbs, don't include lbs): ")
-                    number = weight * int(0.453592)
+                    weight = float(input("Enter your weight (In lbs, don't include lbs): "))
+                    number = round(weight * 0.453592, 2)
                     responses[q['id']] = question
                     storage.append(number)
                     break
