@@ -77,7 +77,7 @@ db_schema:
     indexes: []
     server: full
     title: Users
-metadata: {title: Stellar Cycle}
+metadata: {logo_img: 'asset:Stellar Cycle app logo (1)-logo.png', title: Stellar Cycle}
 name: 'Stellar Cycle  '
 package_name: Stellar_Cycle__
 runtime_options:
