@@ -275,3 +275,4 @@ class Form2(Form2Template):
       return
 
     self.account_status_label.text = "Your survey response has been saved."
+    open_form("Form3")

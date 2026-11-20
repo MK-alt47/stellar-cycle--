@@ -153,6 +153,66 @@ a:focus {
   background: var(--blank-surface);
 }
 
+.schedule-card {
+  padding: 24px;
+  border: 1px solid var(--blank-border);
+  border-radius: 8px;
+  background: var(--blank-surface);
+}
+
+.schedule-intro {
+  margin: 0 0 12px;
+  color: var(--blank-muted);
+}
+
+.anvil-role-schedule-status {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.schedule-table {
+  margin-top: 20px;
+  overflow-x: auto;
+  border: 1px solid var(--blank-border);
+  border-radius: 6px;
+}
+
+.schedule-table-header,
+.schedule-grid-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.8fr) minmax(120px, 0.6fr) minmax(280px, 2fr);
+  gap: 16px;
+  align-items: start;
+  padding: 14px 16px;
+}
+
+.schedule-table-header {
+  background: var(--blank-surface-muted);
+  font-weight: 700;
+}
+
+.schedule-grid-row {
+  border-top: 1px solid var(--blank-border);
+}
+
+.schedule-cell {
+  min-width: 0;
+}
+
+.anvil-role-schedule-cell-label {
+  display: block;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .schedule-table-header,
+  .schedule-grid-row {
+    grid-template-columns: minmax(110px, 0.8fr) minmax(90px, 0.5fr) minmax(220px, 2fr);
+    gap: 10px;
+    padding: 12px;
+  }
+}
+
 input.anvil-text-box,
 textarea.anvil-text-area,
 .anvil-dropdown select,

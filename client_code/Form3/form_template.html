@@ -1,0 +1,20 @@
+<anvil-form layout="Stellar_Cycle__.Layouts.BaseLayout">
+  <anvil-block slot="title">
+    <anvil-component type="Label" name="form_title" prop:role="h1" prop:text="Your Personal Schedule"></anvil-component>
+  </anvil-block>
+  <anvil-block slot="content">
+    <section class="schedule-card">
+      <p class="schedule-intro">Recommendations based on your latest survey response.</p>
+      <anvil-component type="Label" name="status_label" prop:role="schedule-status"></anvil-component>
+      <anvil-component type="Button" name="edit_survey_button" prop:role="secondary-button" prop:text="Edit survey"></anvil-component>
+      <div class="schedule-table">
+        <div class="schedule-table-header">
+          <span>UTC time(s)</span>
+          <span>Category</span>
+          <span>Target or action</span>
+        </div>
+        <anvil-component type="RepeatingPanel" name="schedule_panel" prop:item_template="Stellar_Cycle__.ScheduleItem" prop:role="schedule-list"></anvil-component>
+      </div>
+    </section>
+  </anvil-block>
+</anvil-form>
